@@ -1,0 +1,415 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.wrap{
+  padding-top:100px;
+  width:87%;
+  margin:0 auto;
+}
+.flightSearch{
+  margin:0 20% 30px;
+}
+
+.flightsTitle{
+  margin-top:20px;
+  font-weight: 300;
+  color:#2f2f2f;
+  font-size: 70px;
+  margin-bottom: 30px;
+  line-height: 80px;
+}
+
+.flightsForm{
+  position: relative;
+  height: 70px;
+  width: 520px;
+}
+.flights::placeholder{
+  font-weight: 700;
+  font-size:24px;
+  color:black;
+}
+
+.flightsInput{
+  background-image: url("../assets/search.png");
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: 20px center;
+  background-color:white;
+  width:100%;
+  height: 100%;
+  border: none;
+  padding: 0 80px 0 80px;
+  border-top-right-radius: 50px;
+  outline: none;  
+}
+
+.flightsSubmit{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 1;
+  width: 150px;
+  border-top-right-radius: 50px;
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: white;
+  background-color: #1eb7ee;
+  transition-duration: 0.5s;
+  cursor: pointer;
+  outline: none;
+}
+
+.flightsSubmit:hover{
+  border-top-right-radius: 20px;
+}
+
+.departuresAndArrivals{
+  margin:0 auto;
+  background: #1EB7EE;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+
+.departuresAndArrivals::after{
+  content:"";
+  width:100%;
+  display: block;
+  clear:both;
+}
+
+.arrival{
+  text-align: right;
+  padding: 15px 0;
+  padding-right: 50px;
+  float:left;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  width:50%;
+  background: #1EB7EE;
+  cursor:pointer;
+}
+span{
+  color:white;
+}
+
+.departure{
+  padding: 15px 0;
+  padding-left:50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  float:left;
+  width:50%;
+  background: #1EB7EE;
+  cursor:pointer;
+}
+
+.arrival,.departure span{
+  font-weight: 600;
+  font-size:24px;
+}
+
+.active{
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  background: white;
+  height:70px;
+}
+
+.active span{
+  color: #1EB7EE;
+}
+
+.icon-arrival{
+  display: inline-block;
+  background: url('../assets/sprite.png') no-repeat;
+  width: 32px;
+  height: 32px;
+  background-position: -32px 0px;
+  background-size: 200%;
+}
+
+  .act-a{
+    background-position-y: -32px;
+  }
+
+.icon-departure{
+  display: inline-block;
+  background: url('../assets/sprite.png') no-repeat;
+  width: 32px;
+  height: 32px;
+  background-position: 0px -32px;
+  background-size: 200%;
+}
+
+  .act-d{
+    background-position-y: 0px;
+  }
+
+
+
+.calendar-dates{
+  background: white;
+}
+.calendar-dates::after{
+  content:"";
+  display: block;
+  width: 100%;
+  clear: both;
+}
+
+.calendar{
+  cursor: pointer;
+  float:left;
+  background:url('../assets/calendar.png');
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color:#1EB7EE;
+  height: 40px;
+  width: 40px;
+  margin:20px 10px;
+}
+.dates{
+  margin-top:10px;
+  float:left;
+  position: relative;
+  margin-right: 30px;
+}
+
+.date{
+  position: relative;
+}
+
+.active-day::after{
+  content:"";
+  width:100%;
+  height: 3px;
+  bottom:0;
+  position: absolute;
+  display: block;
+  background:#1EB7EE;
+}
+
+
+
+.dates ul{
+  list-style-type: none;
+  padding:0;
+}
+
+.dates ul li{
+  display: inline-block;
+  text-decoration: none;
+}
+
+.dates ul li a{
+  position: relative;
+  color:#1EB7EE;
+  font-size:14px;
+  padding:15px 10px;
+  line-height: 15Spx;
+  text-decoration: none;
+}
+
+.dates ul li a:first-child{
+  padding-left: 20px;
+}
+.dates ul li a:last-child{
+  padding-right: 20px;
+}
+
+.dates span{
+  color:#1EB7EE;
+  position: absolute;
+  width:40%;
+  top:0;
+  left:0;
+  right:0;
+  margin:0 auto;
+}
+
+
+table { 
+  width: 100%; 
+  border-collapse: collapse;
+  text-align: center;
+} 
+
+thead{
+  background: white;
+  
+}
+thead th{
+  padding:10px;
+}
+
+tbody td{
+  padding:10px;
+}
+
+.detail>span{
+  opacity:0;
+}
+.arrow{
+  display: none;
+  font-size:28px;
+  font-weight: bold;
+}
+tr:hover .detail>span{
+  transition: .2s ease-out;
+  opacity:1;
+  cursor:pointer;
+  color:#1EB7EE;
+  border-bottom:1px solid #1EB7EE;
+}
+
+
+tbody tr:hover {
+  transform: scale(1);
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.2);
+}
+
+tr:nth-child(2n){
+  background: white;
+}
+
+
+.term-A>span{
+  display: inline-block;
+  width:30px;
+  height:25px;
+  font-weight: bold;
+  color:green;
+  border:1px solid green;
+  border-radius:50%;
+}
+.term-D>span{
+  display: inline-block;
+  width:30px;
+  height:25px;
+  font-weight: bold;
+  color:#1eb7ee;
+  border:1px solid #1eb7ee;
+  border-radius:50%;
+}
+
+.no-info{
+  width:100%;
+  height: 300px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 992px){
+  .wrap{
+    width:100%;
+    margin: 0 0;
+  }
+  .more-info{
+    display: none;
+  }
+  .arrow{
+    vertical-align: center;
+    display: inline;
+  }
+  tr:hover .detail>span{
+    border-bottom: 0;
+  }
+
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+      display: grid;
+      grid-template:  'b c g'
+                      'a d g'
+                      'f e g';
+      align-items: center;
+  }
+  
+  .term-A,.term-D{
+    opacity:0;
+  }
+
+  .a {
+    grid-area: a;
+  }
+  .b {
+      grid-area: b;
+  }
+  .c {
+      grid-area: c;
+  }
+  .d {
+      grid-area: d;
+  }
+  .e {
+      grid-area: e;
+  }
+  .f {
+      grid-area: f;
+  }
+  .g {
+      grid-area: g;
+  }
+  
+  .flightsTitle{
+    font-size: 60px; 
+  }
+  .flightSearch{
+    margin-left:15%;
+  }
+}
+
+@media screen  and (max-width: 700px){
+  
+  .flightsTitle{
+    font-size: 35px; 
+  }
+  .flightSearch{
+    margin-left:0;
+    width:100%;
+  }
+  button{
+    display: none;
+  }
+  .wrap .flightsForm{
+    width:100%;
+  }
+  .wrap .flightSearch input{
+    border-top-right-radius: 0;
+    width:100%;
+  }
+  .wrap .departuresAndArrivals{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+  .wrap .active{
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+  .wrap span{
+    font-size: 14px;
+    
+  }
+  .wrap ul li a{
+    font-size: 14px;
+  }
+  td{
+    font-size: 14px;
+  }
+} 
+
+
+
+
+
