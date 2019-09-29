@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./FlightSearch.css";
-
+// Варто дотримуватись порядку імпортів в компоненті - спочатку бібліотеки, після - решта
 import { Link } from "react-router-dom";
 import { parse, stringify } from 'query-string';
 import axios from "axios";
@@ -19,13 +19,13 @@ export default class FlightSearch extends Component {
     readyData: false
   };
 
-  
+
   changeStatus(activeStatus){
     this.setState({activeStatus});
     this.props.history.push(`?${this.concatURL(this.setActiveDay(this.state.activeDay,'full'),activeStatus)}`);
   }
-  
-  
+
+
   concatURL(day = this.setActiveDay('today','full'),status = this.state.activeStatus ,searhString = this.state.searhString){
     const parsed = parse(this.props.location.search);
     parsed.day = day;
@@ -34,19 +34,19 @@ export default class FlightSearch extends Component {
     return stringify(parsed);
   }
 
- 
-  setActiveDay(needDay, view) {  
-    class getDate{
+
+  setActiveDay(needDay, view) {
+    class getDate{ // Так і проситься щоб його винесли окремо
 
       constructor(){
         this.timeNow = new Date(Date.now());
         this.timeYesterday = new Date(+this.timeNow - (1000 * 60 * 60 * 24));
         this.timeTommorow = new Date(+this.timeNow + (1000 * 60 * 60 * 24));
-               
+
         this.dayToday = this.timeNow.getDate();
         this.dayYesterday = this.timeYesterday.getDate();
         this.dayTommorow =  this.timeTommorow.getDate();
-        
+
         this.monthToday = this.timeNow.getMonth()+1;
         this.monthYesterday = this.timeYesterday.getMonth()+1;
         this.monthTommorow = this.timeTommorow.getMonth()+1;
@@ -56,7 +56,7 @@ export default class FlightSearch extends Component {
         this.yearTommorow = this.timeTommorow.getFullYear();
       }
 
-      
+
       fullString(day, month, year){
         return `${day < 10 ? "0"+day : day}-${month < 10 ? "0" + month : month}-${year}`;
       }
@@ -64,9 +64,9 @@ export default class FlightSearch extends Component {
         return `${day < 10 ? "0"+day : day}/${month < 10 ? "0" + month : month}`;
       }
 
-       
+
       getFullYesterday(){
-        return this.fullString(this.dayYesterday, this.monthYesterday, this.yearYesterday);  
+        return this.fullString(this.dayYesterday, this.monthYesterday, this.yearYesterday);
       }
       getFullToday(){
         return this.fullString(this.dayToday, this.monthToday, this.yearToday);
@@ -75,7 +75,7 @@ export default class FlightSearch extends Component {
         return this.fullString(this.dayTommorow, this.monthTommorow, this.yearTommorow);
       }
 
-      
+
       getShortYesterday(){
         return this.shortString(this.dayYesterday, this.monthYesterday);
       }
@@ -85,25 +85,25 @@ export default class FlightSearch extends Component {
       getShortTommorow(){
         return this.shortString(this.dayTommorow, this.monthTommorow);
       }
- 
-    } 
 
-    
+    }
+
+
     const dates = new getDate();
 
     const data = (day, show) => {
 
       switch(day){
-        case 'yesterday' : 
+        case 'yesterday' : // Тут і далі і цьому switch case замість else if вистачило би одного if
           if(show === 'short'){
             return dates.getShortYesterday();
           }
           else if(show ==='full'){
             return dates.getFullYesterday();
-          } 
+          }
         break;
 
-        case 'today': 
+        case 'today':
           if(show === 'short'){
             return dates.getShortToday();
           }
@@ -118,7 +118,7 @@ export default class FlightSearch extends Component {
           }
           else if(show === 'full'){
             return dates.getFullTommorow();
-          } 
+          }
         break;
 
         default: ;
@@ -127,11 +127,11 @@ export default class FlightSearch extends Component {
 
     return data(needDay, view);
   }
-  
-  
+
+
   componentDidMount() {
     const URL = parse(this.props.location.search);
-    axios
+    axios // Реквести варто виносити в окремий файл
       .get(`https://api.iev.aero/api/flights/${URL.day ? URL.day : this.setActiveDay('today', 'full')}`)
       .then(res => {
         const allApi = res.data.body;
@@ -145,17 +145,18 @@ export default class FlightSearch extends Component {
           searchString: URL.searchString ? URL.searchString : '',
           readyData: true
         });
+        // Це порівняння завжди буде false
         this.changeStatus(`${URL === 'arrival' ? 'arrival' : 'departure'}`);
         this.searchFlight();
       });
   }
 
-  
+
   changeSearchString(e){
     this.setState({searchString: e.target.value});
   }
 
-  
+
   parseTime = (time) =>{
 		const parsed = new Date(Date.parse(time));
     const hours = parsed.getHours();
@@ -163,11 +164,11 @@ export default class FlightSearch extends Component {
     return `${hours< 10 ? "0"+hours : hours }:${minutes<10 ? "0"+minutes : minutes}`;
   }
 
-  
-  renderTable(){
+
+  renderTable(){ // Ще один явний претендент на окремий компонент
     const active = this.state.activeStatus;
-    
-    
+
+
     const whatRender = () =>{
       return active === 'arrival' ? this.state.renderArrival : this.state.renderDeparture;
     };
@@ -200,14 +201,14 @@ export default class FlightSearch extends Component {
               <span className="more-info">Більше інформації</span>
               <span className="arrow">&gt;</span>
             </td>
-          </tr> 
+          </tr>
           ))}
         </tbody>
       </table>
     );
   }
 
-  
+
   changeDay(day){
     this.setState({renderArrival: [], renderDeparture: []});
     axios.get(`https://api.iev.aero/api/flights/${this.setActiveDay(day, 'full')}`)
@@ -226,10 +227,11 @@ export default class FlightSearch extends Component {
       })
   }
 
-  
+
   searchFlight(){
     const searchString = this.state.searchString;
     this.props.history.push(`?${this.concatURL(this.setActiveDay(this.state.activeDay,'full'),this.state.activeStatus,searchString)}`);
+    // Не знаю чому тут і нище let замість const. Функцію фільтрування варто винести окремо і привести до загального формату.
     let arrivalAfterSearch = this.state.arrivalAPI.filter((item)=>{
       return item["airportFromID.name"].toLowerCase().includes(searchString.toLowerCase()) || item["fltTypeID.name"].toLowerCase().includes(searchString.toLowerCase());
     });
@@ -239,7 +241,7 @@ export default class FlightSearch extends Component {
     this.setState({renderArrival: arrivalAfterSearch, renderDeparture: departureAfterSearch});
   }
 
-  
+
   render() {
     return (
      this.state.readyData ? <div className="wrap">
@@ -291,7 +293,7 @@ export default class FlightSearch extends Component {
           <div className="calendar"></div>
 
           <div className="dates">
-            <ul>
+            <ul> {/* Цей список можна відрефакторити і зменшити кількість повторюваного коду */}
               <li>
                 <Link to={`/?${this.concatURL(this.setActiveDay('yesterday','full'))}`}
                 className={`date ${this.state.activeDay === 'yesterday' ? 'active-day' : ''}`}

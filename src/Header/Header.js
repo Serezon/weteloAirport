@@ -3,8 +3,8 @@ import './Header.css';
 
 import logo from '../assets/logo.png';
 
-const Header = () =>{
-  return(
+const Header = () => {
+  return (
     <header>
       <div className="logo">
         <img src={logo} alt="Logo"/>
